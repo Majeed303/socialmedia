@@ -59,6 +59,7 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);   
 app.use("/posts" , postRoutes);   
 
+
            //port
 const port = process.env.PORT || 3002;
             //lister

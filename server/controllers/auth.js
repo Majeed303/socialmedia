@@ -3,9 +3,8 @@ import { User } from "../models/User.js";
 import jwt from "jsonwebtoken";
 
          //REGISTER USER
-export const  register = async (req,res)=>{
+export const register = async (req,res)=>{
     try{
-       console.log(req.body)
        const {
         firstName,
         lastName,
@@ -16,7 +15,14 @@ export const  register = async (req,res)=>{
         location,
         occupation
        } =req.body;
-            
+       const existingUser = await User.findOne({ email });
+       const sameuser = await User.findOne({firstName})
+       if (existingUser) {
+        return res.status(400).json({ msg: "Email already exists" });
+      }
+      if(sameuser){
+        return res.status(400).json({msg : "User Name already exists."})
+      }
         const salt = await bcrypt.genSalt();
         const passwordHash = await bcrypt.hash(password, salt );
 
